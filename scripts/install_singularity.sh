@@ -1,5 +1,4 @@
 #!/bin/bash
-# Pass VERSION as parameter
 
 VERSION=2.4
 

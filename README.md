@@ -29,3 +29,11 @@ Supported VM sizes:
 
 
 (The availability changes depending on the region selected for the deployment)
+
+Command:
+az group create --name Name --location "South Central US"
+az group deployment create \
+    --name SingularityTest \
+    --resource-group ResourceGroupTest \
+    --template-uri "https://raw.githubusercontent.com/ruycastilho/AzureTemplates/master/azuredeploy.json"
+    --parameters storageAccountType=Standard_GRS vmSize=Standard_A8
