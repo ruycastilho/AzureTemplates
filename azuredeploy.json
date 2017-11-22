@@ -29,6 +29,7 @@
       ],
       "metadata": {
         "description": "The Linux distro for the VM."
+      }
     },
     "CentOSVersion": {
       "type": "string",
@@ -41,6 +42,7 @@
       ],
       "metadata": {
         "description": "The CentOS version for the VM. This will pick a fully patched image of this given Centos version, specifically for HPC."
+      }
     },
     "ubuntuVersion": {
       "type": "string",
