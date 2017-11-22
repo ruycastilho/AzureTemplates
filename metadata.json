@@ -1,0 +1,7 @@
+{
+    "itemDisplayName": "Deploy custom VMs with Singularity installed",
+    "description": "This template allows the deployment of a custom Linux VM with Singularity installed, using, by default, Ubuntu 16.04 and Singularity 2.4, in a A8 size VM in the resource group location specified and returns the FQDN of the VM.",
+    "summary": "This template allows the deployment of a custom Linux VM with Singularity installed.",
+    "githubUsername": "ruycastilho",
+    "dateUpdated": "2017-11-22"
+  }
