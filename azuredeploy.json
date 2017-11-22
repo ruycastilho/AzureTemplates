@@ -39,7 +39,7 @@
         "OpenLogic"
       ],
       "metadata": {
-        "description": "The Linux distro for the VM."
+        "description": "The publisher of the Linux distro for the VM."
       }
     },
     "OSVersion": {
@@ -55,7 +55,7 @@
         "7.3"
       ],
       "metadata": {
-        "description": "The version for the VM. This will pick a fully patched image of this given Ubuntu version."
+        "description": "The version for the VM."
       }
     },
     "singularityVersion": {
@@ -197,7 +197,7 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "[variables('OSPublisher')]",
+            "publisher": "[variables('ImagePublisher')]",
             "offer": "[parameters('ImageOffer')]",
             "sku": "[parameters('OSVersion')]",
             "version": "latest"
