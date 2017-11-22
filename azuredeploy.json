@@ -20,7 +20,7 @@
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
-    "ubuntuVersion": {
+    "centOSVersion": {
       "type": "string",
       "defaultValue": "7.3",
       "allowedValues": [
@@ -30,12 +30,12 @@
         "7.3"
       ],
       "metadata": {
-        "description": "The version for the VM. This will pick a fully patched image of this given Centos version, specifically for HPC."
+        "description": "The CentOS version for the VM. This will pick a fully patched image of this given Centos version, specifically for HPC."
       }
     },
     "singularityVersion": {
       "type": "string",
-      "defaultValue": "2.4",
+      "defaultValue": "2.3.1",
       "metadata": {
         "description": "The version of Singularity to install on the VM"
       }
