@@ -31,6 +31,31 @@
         "description": "The Linux distro for the VM."
       }
     },
+    "CentOSVersion": {
+      "type": "string",
+      "defaultValue": "7.3",
+      "allowedValues": [
+        "6.5",
+        "6.8",
+        "7.1",
+        "7.3"
+      ],
+      "metadata": {
+        "description": "The CentOS version for the VM. This will pick a fully patched image of this given Centos version, specifically for HPC."
+      }
+    },
+    "ubuntuVersion": {
+      "type": "string",
+      "defaultValue": "16.04",
+      "allowedValues": [
+        "14.04",
+        "16.04",
+        "17.04"
+      ],
+      "metadata": {
+        "description": "The version for the VM. This will pick a fully patched image of this given Ubuntu version."
+      }
+    },
     "singularityVersion": {
       "type": "string",
       "defaultValue": "2.4",
@@ -66,6 +91,8 @@
   },
   "variables": {
     "addressPrefix": "10.0.0.0/16",
+    "UbuntuPublisher": "Canonical",
+    "CentOSPublisher": "OpenLogic",
     "nicName": "myVMNic",
     "publicIPAddressName": "myPublicIP",
     "publicIPAddressType": "Dynamic",
@@ -152,6 +179,7 @@
     },
     {
       "apiVersion": "2017-03-30",
+      "condition": "[equals(parameters('ImageOffer'),'UbuntuServer')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
@@ -170,9 +198,60 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "Canonical",
-            "offer": "UbuntuServer",
-            "sku": "16.04",
+            "publisher": "[variables('UbuntuPublisher')]",
+            "offer": "[parameters('ImageOffer')]",
+            "sku": "[parameters('UbuntuVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "diskSizeGB": 1023,
+              "lun": 0,
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-03-30",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "publisher": "[variables('CentOSPublisher')]",
+            "offer": "[parameters('ImageOffer')]",
+            "sku": "[parameters('CentOSVersion')]",
             "version": "latest"
           },
           "osDisk": {
