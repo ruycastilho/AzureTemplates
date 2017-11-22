@@ -20,7 +20,17 @@
         "description": "Unique DNS Name for the Public IP used to access the Virtual Machine."
       }
     },
-    "centOSVersion": {
+    "ImageOffer": {
+      "type": "string",
+      "defaultValue": "UbuntuServer",
+      "allowedValues": [
+        "UbuntuServer",
+        "CentOS-HPC"
+      ],
+      "metadata": {
+        "description": "The Linux distro for the VM."
+    },
+    "CentOSVersion": {
       "type": "string",
       "defaultValue": "7.3",
       "allowedValues": [
@@ -31,11 +41,22 @@
       ],
       "metadata": {
         "description": "The CentOS version for the VM. This will pick a fully patched image of this given Centos version, specifically for HPC."
+    },
+    "ubuntuVersion": {
+      "type": "string",
+      "defaultValue": "16.04",
+      "allowedValues": [
+        "14.04",
+        "16.04",
+        "17.04"
+      ],
+      "metadata": {
+        "description": "The version for the VM. This will pick a fully patched image of this given Ubuntu version."
       }
     },
     "singularityVersion": {
       "type": "string",
-      "defaultValue": "2.3.1",
+      "defaultValue": "2.4",
       "metadata": {
         "description": "The version of Singularity to install on the VM"
       }
@@ -45,9 +66,7 @@
       "defaultValue": "Standard_A8",
       "allowedValues": [
         "Standard_A8",
-        "Standard_A9",
-        "Standard_H16r",
-        "Standard_H16mr"
+        "Standard_NC6",
       ],
       "metadata": {
         "description": "The size of the VM to create"
@@ -70,8 +89,8 @@
   },
   "variables": {
     "addressPrefix": "10.0.0.0/16",
-    "imagePublisher": "OpenLogic",
-    "imageOffer": "CentOS-HPC",
+    "UbuntuPublisher": "Canonical",
+    "CentOSPublisher": "OpenLogic",
     "nicName": "myVMNic",
     "publicIPAddressName": "myPublicIP",
     "publicIPAddressType": "Dynamic",
@@ -158,6 +177,7 @@
     },
     {
       "apiVersion": "2017-03-30",
+      "condition": "[equals(parameters('ImageOffer'),'UbuntuServer')]",
       "type": "Microsoft.Compute/virtualMachines",
       "name": "[variables('vmName')]",
       "location": "[resourceGroup().location]",
@@ -176,9 +196,61 @@
         },
         "storageProfile": {
           "imageReference": {
-            "publisher": "[variables('imagePublisher')]",
-            "offer": "[variables('imageOffer')]",
-            "sku": "[parameters('centOSVersion')]",
+            "publisher": "[variables('UbuntuPublisher')]",
+            "offer": "[parameters('imageOffer')]",
+            "sku": "[parameters('UbuntuVersion')]",
+            "version": "latest"
+          },
+          "osDisk": {
+            "createOption": "FromImage"
+          },
+          "dataDisks": [
+            {
+              "diskSizeGB": 1023,
+              "lun": 0,
+              "createOption": "Empty"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled": "true",
+            "storageUri": "[concat(reference(concat('Microsoft.Storage/storageAccounts/', variables('storageAccountName')), '2016-01-01').primaryEndpoints.blob)]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2017-03-30",
+      "condition": "[equals(parameters('ImageOffer'),'CentOS-HPC')]",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[variables('vmName')]",
+      "location": "[resourceGroup().location]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Storage/storageAccounts/', variables('storageAccountName'))]",
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName'))]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "osProfile": {
+          "computerName": "[variables('vmName')]",
+          "adminUsername": "[parameters('adminUsername')]",
+          "adminPassword": "[parameters('adminPassword')]"
+        },
+        "storageProfile": {
+          "imageReference": {
+            "imagePublisher": "OpenLogic",
+            "offer": "[parameters('imageOffer')]",
+            "sku": "[variables('CentOSVersion')]",
             "version": "latest"
           },
           "osDisk": {

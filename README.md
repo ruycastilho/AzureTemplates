@@ -13,27 +13,25 @@ Template that contemplates VMs:
 
 The default configuration is:
 VM size:
-* ..
+* Standard_A8
 
 Storage:
-* ..
+* Standard_LRS
 
 It is possible to change the configurations by using the following parameters:
 * vmSize -> type of VM instance
-* ..
+* storageAccountType -> type of storage account
 
 Supported VM sizes:
-* ..
-* ..
-* ..
+* Standard_A8 (No GPU)
+* Standard_NC6 (GPU enabled)
 
-
-(The availability changes depending on the region selected for the deployment)
+(The availability changes depending on the region selected for the deployment - Default West US 2 includes all supported sizes)
 
 Command:
-az group create --name Name --location "South Central US"
+az group create --name <ResourceGroupName> --location "West US 2"
 az group deployment create \
-    --name SingularityTest \
-    --resource-group ResourceGroupTest \
+    --name <VMname> \
+    --resource-group <ResourceGroupName> \
     --template-uri "https://raw.githubusercontent.com/ruycastilho/AzureTemplates/master/azuredeploy.json"
     --parameters storageAccountType=Standard_GRS vmSize=Standard_A8
