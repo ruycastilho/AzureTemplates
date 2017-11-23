@@ -44,10 +44,10 @@
     },
     "OSVersion": {
       "type": "string",
-      "defaultValue": "16.04",
+      "defaultValue": "16.04-LTS",
       "allowedValues": [
         "14.04",
-        "16.04",
+        "16.04-LTS",
         "17.04",
         "6.5",
         "6.8",
