@@ -33,18 +33,18 @@ Supported VM sizes:
 
 Commands:
 Creating Resource Group:
-* az group create --name <ResourceGroupName> --location "West US 2"
+* az group create --name &lt;ResourceGroupName&gt; --location "West US 2"
 
 Deploying Ubuntu:
 * az group deployment create \
-    --name <VMname> \
-    --resource-group <ResourceGroupName> \
+    --name &lt;VMname&gt; \
+    --resource-group &lt;ResourceGroupName&gt; \
     --template-uri "https://raw.githubusercontent.com/ruycastilho/AzureTemplates/master/azuredeploy.json"
     --parameters ImageOffer=UbuntuServer ImagePublisher=Canonical OSVersion=16.04
 
 Deploying CentOS:
 * az group deployment create \
-    --name <VMname> \
-    --resource-group <ResourceGroupName> \
+    --name &lt;VMname&gt; \
+    --resource-group &lt;ResourceGroupName&gt; \
     --template-uri "https://raw.githubusercontent.com/ruycastilho/AzureTemplates/master/azuredeploy.json"
     --parameters ImageOffer=CentOS-HPC ImagePublisher=OpenLogic OSVersion=7.3
