@@ -26,8 +26,8 @@ It is possible to change the configurations by using the following parameters:
 * ImagePublisher -> Publisher of the image in use
 *
 Supported VM sizes:
-* Standard_A7 (No GPU)
-* Standard_NC6 (GPU enabled)
+* Standard&#95;D2s&#95;v3 (No GPU)
+* Standard&#95;NC6 (GPU enabled)
 
 (The availability changes depending on the region selected for the deployment - Default West US 2 includes all supported sizes)
 

@@ -67,9 +67,9 @@
     },
     "vmSize": {
       "type": "string",
-      "defaultValue": "Standard_A7",
+      "defaultValue": "Standard_D2s_v3",
       "allowedValues": [
-        "Standard_A7",
+        "Standard_D2s_v3",
         "Standard_NC6"
       ],
       "metadata": {
