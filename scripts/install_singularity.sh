@@ -2,7 +2,7 @@
 
 VERSION=2.4
 
-apt-get install -y wget make 
+apt-get install -y wget make gcc 
 wget -q https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
 tar xvf singularity-$VERSION.tar.gz
 cd singularity-$VERSION
