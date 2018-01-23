@@ -14,7 +14,7 @@
 #Reboot the VM and reconnect. Exit X server:
 
     sudo systemctl stop lightdm.service
-    wget -O NVIDIA-Linux-x86_64-384.73-grid.run https://go.microsoft.com/fwlink/?linkid=849941  
+    wget -O NVIDIA-Linux-x86_64-384.73-grid.run https://go.microsoft.com/fwlink/?linkid=849941
     chmod +x NVIDIA-Linux-x86_64-384.73-grid.run
     sudo ./NVIDIA-Linux-x86_64-384.73-grid.run
 
@@ -27,14 +27,17 @@
 
 #Cuda:
 
-    CUDA_REPO_PKG=cuda-8-0_8.0.61-1_amd64.deb
-    wget -O /tmp/${CUDA_REPO_PKG} http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/${CUDA_REPO_PKG} 
+    CUDA_REPO_PKG=cuda-repo-ubuntu1604_9.0.176-1_amd64.deb
+    wget -O /tmp/${CUDA_REPO_PKG} http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/${CUDA_REPO_PKG}
     sudo dpkg -i /tmp/${CUDA_REPO_PKG}
-    sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1404/x86_64/7fa2af80.pub 
+    sudo apt-key adv --fetch-keys http://developer.download.nvidia.com/compute/cuda/repos/ubuntu1604/x86_64/7fa2af80.pub
     rm -f /tmp/${CUDA_REPO_PKG}
     sudo apt-get update
     sudo apt-get install cuda-drivers
     sudo apt-get install cuda
+
+    export PATH=/usr/local/cuda-9.1/bin${PATH:+:${PATH}}
+    export LD_LIBRARY_PATH=/usr/local/cuda-9.1/lib64\${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
 
 #Reboot the VM and proceed to verify the installation.
 
