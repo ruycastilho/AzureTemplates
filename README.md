@@ -24,12 +24,16 @@ It is possible to change the configurations by using the following parameters:
 * ImageOffer -> Linux distro
 * OSVersion -> Distro version
 * ImagePublisher -> Publisher of the image in use
-*
+
 Supported VM sizes:
 * Standard&#95;D2s&#95;v3 (No GPU)
 * Standard&#95;NC6 (GPU enabled)
 
 (The availability changes depending on the region selected for the deployment - Default West US 2 includes all supported sizes)
+
+Requirements:
+In order to execute the commands below, you need to install the Azure CLI. Follow the instructions on this 
+[link](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) to get it for your setup.
 
 Commands:
 Creating Resource Group:
